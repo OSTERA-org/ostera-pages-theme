@@ -1,0 +1,149 @@
+// OSTERA bar: the navy header that is the same on every site.
+
+.ostera-header {
+  background: $ostera-navy;
+  color: $ostera-white;
+}
+
+.ostera-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  min-height: 64px;
+}
+
+.ostera-header__logo {
+  display: inline-flex;
+  align-items: center;
+
+  img {
+    display: block;
+    height: 40px;
+    width: auto;
+  }
+}
+
+.ostera-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 1.7vw;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ostera-nav a {
+  display: inline-block;
+  padding: 4px 0;
+  color: $ostera-white;
+  // The same size as the menu on ostera.org: Squarespace size 1.4rem,
+  // which grows with the window width as (1.4 - 1) * 1.2vw + 1rem.
+  font-size: calc(0.48vw + 1rem);
+  letter-spacing: -0.025em;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.ostera-nav a:hover,
+.ostera-nav a:focus,
+.ostera-nav a.is-active {
+  color: $ostera-white;
+  border-bottom-color: $ostera-white;
+}
+
+// The menu toggle is only shown on narrow screens.
+.ostera-nav-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ostera-nav-toggle__label {
+  display: none;
+  cursor: pointer;
+  color: $ostera-white;
+  border: 2px solid $ostera-white;
+  border-radius: 6px;
+  padding: 2px 12px;
+  font-size: 0.9375rem;
+}
+
+.ostera-nav-toggle:focus + .ostera-nav-toggle__label {
+  outline: 2px solid $ostera-white;
+  outline-offset: 2px;
+}
+
+@media (max-width: $breakpoint) {
+  .ostera-nav-toggle__label {
+    display: inline-block;
+  }
+
+  .ostera-nav {
+    display: none;
+    width: 100%;
+    padding: 8px 0 16px;
+  }
+
+  .ostera-nav ul {
+    flex-direction: column;
+  }
+
+  .ostera-nav-toggle:checked ~ .ostera-nav {
+    display: block;
+  }
+}
+
+// Site bar: the title and navigation of the individual site.
+
+.site-bar {
+  background: $ostera-white;
+  border-bottom: 1px solid $ostera-rule;
+}
+
+.site-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.site-bar__title {
+  font-family: $font-heading;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: $ostera-navy;
+  text-decoration: none;
+}
+
+.site-bar__title:hover,
+.site-bar__title:focus {
+  color: $ostera-rust;
+}
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav a {
+  color: $ostera-navy;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.site-nav a:hover,
+.site-nav a:focus,
+.site-nav a.is-active {
+  color: $ostera-rust;
+  border-bottom-color: $ostera-rust;
+}

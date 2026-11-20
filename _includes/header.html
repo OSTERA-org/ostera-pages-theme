@@ -1,0 +1,64 @@
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="ostera-header">
+  <div class="wrap ostera-header__inner">
+    <a class="ostera-header__logo" href="https://ostera.org/">
+      <img src="{{ '/assets/images/ostera-logo.png' | relative_url }}" alt="OSTERA home" height="40">
+    </a>
+
+    <input type="checkbox" id="ostera-nav-toggle" class="ostera-nav-toggle">
+    <label for="ostera-nav-toggle" class="ostera-nav-toggle__label">Menu</label>
+
+    {%- comment -%}
+      These links are the same on every OSTERA GitHub Pages site.
+      Set ostera_section to "wg" or "pub" in a site's _config.yml to
+      mark Working Groups or Publications as the current section.
+    {%- endcomment %}
+    <nav class="ostera-nav" aria-label="OSTERA">
+      <ul>
+        <li><a href="https://ostera.org/">Home</a></li>
+        <li><a href="https://wg.ostera.org/"{% if site.ostera_section == "wg" %} class="is-active" aria-current="true"{% endif %}>Working Groups</a></li>
+        <li><a href="https://pub.ostera.org/"{% if site.ostera_section == "pub" %} class="is-active" aria-current="true"{% endif %}>Publications</a></li>
+        <li><a href="https://ostera.org/membership">Membership</a></li>
+        <li><a href="https://ostera.org/news">News</a></li>
+        <li><a href="https://ostera.org/about-ostera">About</a></li>
+        <li><a href="https://member.ostera.org/">Portal</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+{%- if site.navigation %}
+{%- assign here = page.url | relative_url %}
+{%- assign site_home = '/' | relative_url %}
+<div class="site-bar">
+  <div class="wrap site-bar__inner">
+    <a class="site-bar__title" href="{{ site_home }}">{{ site.short_title | default: site.title | escape }}</a>
+    <nav class="site-nav" aria-label="{{ site.short_title | default: site.title | escape }}">
+      <ul>
+        {%- for item in site.navigation %}
+        {%- if item.url contains '://' %}
+          {%- assign item_url = item.url %}
+        {%- else %}
+          {%- assign item_url = item.url | relative_url %}
+        {%- endif %}
+        {%- assign active = false %}
+        {%- if here == item_url %}
+          {%- assign active = true %}
+        {%- elsif item_url != site_home and here contains item_url %}
+          {%- assign active = true %}
+        {%- endif %}
+        <li><a href="{{ item_url }}"{% if active %} class="is-active" aria-current="page"{% endif %}>{{ item.title | escape }}</a></li>
+        {%- endfor %}
+        {%- comment -%}
+          Every site with source_url in its _config.yml gets a GitHub entry
+          last, so it does not need to be listed in navigation.
+        {%- endcomment %}
+        {%- if site.source_url %}
+        <li><a href="{{ site.source_url }}">GitHub</a></li>
+        {%- endif %}
+      </ul>
+    </nav>
+  </div>
+</div>
+{%- endif %}
