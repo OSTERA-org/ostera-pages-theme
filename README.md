@@ -1,41 +1,23 @@
 # OSTERA Pages Theme
 
-This repository holds the shared Jekyll theme for the OSTERA GitHub.io Pages. Any change to this repository will show up on every site the next time that site is build. This theme will enable every GitHub site to have a similar look and feel to that of [ostera.org](https://ostera.org/).
+This repository holds the shared Jekyll theme for the OSTERA GitHub.io Pages. Any change to this repository will show up on every site the next time that site is built. This theme will enable every GitHub site to have a similar look and feel to that of [ostera.org](https://ostera.org/).
 
 This theme is currently used by:
 
 * https://pub.ostera.org/ (the publications site)
 * https://wg.ostera.org/ (the working groups site)
 * https://wg.ostera.org/&lt;wg&gt;/ (individual working group sites)
-* https://wg.ostera.org/reviews/ (the public reviews site)
+* https://pub.ostera.org/reviews/ (the public reviews, part of the publications site)
 
 ## Using the Theme
 
-To use this theme for a website add and then update the following `_config.yml` file in the root folder of that site (for example, `jss/06-Website/`):
+To use this theme for a website, add the following settings to the `_config.yml` file in the root folder of that site and update them. A working group site gets its complete `_config.yml` from the [wg-template](https://github.com/OSTERA-org-Working-Groups/wg-template/) repository (`06-Website/_config.yml`).
 
 ```yaml
-# Jekyll configuration for the working group website.
-# The site is built from this folder by .github/workflows/pages.yml.
-# Do not set baseurl. GitHub Pages sets it automatically.
-#
-# After creating a repository from this template, replace every [WG_...]
-# placeholder in the repository. To find them all, run:
-#   grep -rn '\[WG_' .
-#
-#   [WG_NAME]               full name, such as JSON Signature Scheme
-#   [WG_ACRONYM]            such as JSS
-#   [WG_ID]                 the repository name, such as jss
-#   [WG_CHAIR]              the chair's name
-#   [WG_CHARTER_URL]        link to the approved charter
-#   [WG_SHORT_DESCRIPTION]  one sentence, used by search engines
-#   [WG_SCOPE]              the scope, in the repository README
-#   [WG_PURPOSE]            the purpose, on the website home and charter pages
-#   [WG_GOALS]              the goals, on the website home and charter pages
-
-# Settings used by the theme, on any type of site.
-title: "OSTERA [WG_NAME] ([WG_ACRONYM]) Working Group"
-short_title: "[WG_NAME] ([WG_ACRONYM])"
-description: "[WG_SHORT_DESCRIPTION]"
+# Settings read by the theme.
+title: "OSTERA Example Working Group"
+short_title: "Example"
+description: "One sentence about the site, used by search engines."
 
 remote_theme: OSTERA-org/ostera-pages-theme
 plugins:
@@ -45,31 +27,16 @@ plugins:
 # "wg" for Working Groups, or "pub" for Publications.
 ostera_section: wg
 
-# The site's GitHub repository. The theme links to it from the site bar menu and
-# the footer, and the working group pages use it to link to the repository's
-# folders, files, and issues.
-source_url: https://github.com/OSTERA-org-Working-Groups/[WG_ID]
+# The site's GitHub repository, ending with "/". When it is set, the theme
+# adds a GitHub entry to the site bar menu and a GitHub icon to the footer.
+repo_url: https://github.com/OSTERA-org-Working-Groups/example/
 
-# Settings used only by the working group pages (index.md, charter.md, and
-# publications.md).
-chair: "[WG_CHAIR]"
-charter_url: "[WG_CHARTER_URL]"
-publications_url: "https://pub.ostera.org/"
-
-# The site bar menu. Each url starts with "/" and leaves out the site's own
-# path (for example "/jss"), which is added automatically.
+# The site bar menu. A url on this site starts with "/" and leaves out the
+# site's own path (for example "/jss"), which is added automatically. A full
+# url (with "://") is used as written.
 navigation:
   - title: Home
     url: /
-  - title: Charter
-    url: /charter/
-  - title: Meetings
-    url: /meetings/
-  - title: Work Items
-    url: /work-items/
-  - title: Publications
-    url: /publications/
-
 ```
 
 ## Layouts

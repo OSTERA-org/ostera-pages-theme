@@ -19,9 +19,9 @@
         <li><a href="https://ostera.org/">Home</a></li>
         <li><a href="https://wg.ostera.org/"{% if site.ostera_section == "wg" %} class="is-active" aria-current="true"{% endif %}>Working Groups</a></li>
         <li><a href="https://pub.ostera.org/"{% if site.ostera_section == "pub" %} class="is-active" aria-current="true"{% endif %}>Publications</a></li>
-        <li><a href="https://ostera.org/membership">Membership</a></li>
-        <li><a href="https://ostera.org/news">News</a></li>
-        <li><a href="https://ostera.org/about-ostera">About</a></li>
+        <li><a href="https://ostera.org/membership/">Membership</a></li>
+        <li><a href="https://ostera.org/news/">News</a></li>
+        <li><a href="https://ostera.org/about-ostera/">About</a></li>
         <li><a href="https://member.ostera.org/">Portal</a></li>
       </ul>
     </nav>
@@ -51,11 +51,11 @@
         <li><a href="{{ item_url }}"{% if active %} class="is-active" aria-current="page"{% endif %}>{{ item.title | escape }}</a></li>
         {%- endfor %}
         {%- comment -%}
-          Every site with source_url in its _config.yml gets a GitHub entry
+          Every site with repo_url in its _config.yml gets a GitHub entry
           last, so it does not need to be listed in navigation.
         {%- endcomment %}
-        {%- if site.source_url %}
-        <li><a href="{{ site.source_url }}">GitHub</a></li>
+        {%- if site.repo_url %}
+        <li><a href="{{ site.repo_url }}">GitHub</a></li>
         {%- endif %}
       </ul>
     </nav>
