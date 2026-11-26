@@ -1,0 +1,413 @@
+// Bands are full width sections, matching the alternating sections of ostera.org.
+
+.band {
+  padding: 56px 0;
+}
+
+.band--cream {
+  background: $ostera-cream;
+}
+
+.band--dark {
+  background: $ostera-navy;
+  color: $ostera-white;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  a {
+    color: $ostera-white;
+  }
+}
+
+.page-title {
+  padding: 40px 0;
+
+  h1 {
+    margin: 0;
+  }
+
+  .lead {
+    margin: 0.75em 0 0;
+  }
+}
+
+.hero h1 {
+  font-size: 3rem;
+}
+
+.lead {
+  font-size: 1.25rem;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+// Buttons, matching the JOIN OSTERA and LEARN MORE buttons of ostera.org.
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1.5em;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: $radius;
+  border: 4px solid transparent;
+  font-family: $font-body;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.button--primary {
+  background: $ostera-rust;
+  border-color: $ostera-rust;
+  color: $ostera-white;
+}
+
+.button--primary:hover,
+.button--primary:focus {
+  background: $ostera-navy;
+  border-color: $ostera-navy;
+  color: $ostera-white;
+}
+
+.button--secondary {
+  background: transparent;
+  border-color: $ostera-navy;
+  color: $ostera-navy;
+}
+
+.button--secondary:hover,
+.button--secondary:focus {
+  background: $ostera-navy;
+  color: $ostera-white;
+}
+
+// Tables, such as the Meetings, Work Items, Review History, and Public
+// Reviews tables.
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+// On small screens, a table wider than the screen scrolls sideways inside
+// the page, instead of making the whole page scroll.
+@media (max-width: $breakpoint) {
+  .prose table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+.prose th,
+.prose td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 12px;
+  border-bottom: 1px solid $ostera-rule;
+}
+
+.prose th {
+  background: $ostera-navy;
+  color: $ostera-white;
+}
+
+.prose tr:nth-child(even) td {
+  background: $ostera-cream;
+}
+
+// Cards, used for lists of working groups or publications.
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: $gutter;
+  margin: 0 0 1.5em;
+}
+
+.card {
+  background: $ostera-white;
+  border: 1px solid $ostera-rule;
+  border-top: 4px solid $ostera-rust;
+  border-radius: $radius;
+  padding: 20px 24px;
+
+  h3 {
+    margin-top: 0;
+    font-size: 1.25rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// The status of a Working Group Last Call or Public Review, written by
+// review-status.html as <span class="review-status">. assets/js/ostera.js
+// adds the state class.
+
+.review-status {
+  font-weight: 700;
+}
+
+.review-status--open {
+  color: $ostera-rust;
+}
+
+.review-status--upcoming {
+  color: $ostera-navy;
+}
+
+.review-status--closed,
+.review-status--withdrawn {
+  color: $ostera-muted;
+}
+
+// The status line at the top of a draft's page.
+
+.review-banner {
+  background: $ostera-cream;
+  border-left: 4px solid $ostera-rust;
+  border-radius: 0 $radius $radius 0;
+  padding: 14px 18px;
+  margin: 0 0 1.5em;
+}
+
+// Progress of one version of a work item, written by work-item-stages.html
+// as <ol class="stages"> with one stages__step per step. Each step is done,
+// current, or todo, on its own, because the steps do not wait for each
+// other. Steps run across the page, or down it on small
+// screens.
+
+.prose .stages {
+  list-style: none;
+  counter-reset: stage;
+  display: flex;
+  padding: 0;
+  margin: 0 0 1.5em;
+}
+
+.prose .stages__step {
+  counter-increment: stage;
+  flex: 1 1 0;
+  position: relative;
+  margin: 0;
+  padding: 46px 16px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.stages__step::before {
+  content: counter(stage);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  border: 2px solid $ostera-rule;
+  background: $ostera-white;
+  color: $ostera-muted;
+  font-weight: 700;
+}
+
+.stages__step::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 34px;
+  right: 0;
+  height: 2px;
+  background: $ostera-rule;
+}
+
+.stages__step:last-child::after {
+  display: none;
+}
+
+.stages__step--done::before {
+  content: "\2713";
+  background: $ostera-navy;
+  border-color: $ostera-navy;
+  color: $ostera-white;
+}
+
+.stages__step--done::after {
+  background: $ostera-navy;
+}
+
+.stages__step--current::before {
+  background: $ostera-rust;
+  border-color: $ostera-rust;
+  color: $ostera-white;
+}
+
+.stages__step--todo {
+  color: $ostera-muted;
+}
+
+@media (max-width: $breakpoint) {
+  .prose .stages {
+    flex-direction: column;
+  }
+
+  .prose .stages__step {
+    padding: 6px 0 20px 50px;
+  }
+
+  .stages__step::after {
+    top: 34px;
+    bottom: 0;
+    left: 16px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+}
+
+// The Work Items page of a Working Group, and the list of all Public
+// Reviews: the number under a work item's name, its stage, and small notes
+// in the Review History table.
+
+.work-item__number {
+  display: block;
+  font-size: 0.875rem;
+  color: $ostera-muted;
+}
+
+.work-item-stage {
+  font-weight: 700;
+}
+
+.work-items__github {
+  text-align: center;
+  white-space: nowrap;
+}
+
+// On the Work Items page, each work item is its own <tbody>. The background
+// alternates by work item rather than by row, so all the versions of one
+// work item share a background. A dotted line separates its versions.
+
+.prose .work-items tr:nth-child(even) td {
+  background: none;
+}
+
+.prose .work-items tbody:nth-of-type(even) td {
+  background: $ostera-cream;
+}
+
+.prose .work-items tr:not(:last-child) td:not([rowspan]) {
+  border-bottom-style: dotted;
+}
+
+.review-history__note {
+  font-size: 0.875rem;
+  color: $ostera-muted;
+}
+
+// The drafts of one version as squares (01, 02, ...), each a link to that
+// draft's page; the current draft is filled in.
+.draft-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 1.25em;
+}
+
+.draft-switcher__label {
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.draft-switcher__draft {
+  display: inline-block;
+  min-width: 2.75em;
+  text-align: center;
+  padding: 4px 10px;
+  border: 2px solid $ostera-navy;
+  border-radius: $radius;
+  color: $ostera-navy;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+a.draft-switcher__draft:hover,
+a.draft-switcher__draft:focus {
+  background: $ostera-cream;
+}
+
+.draft-switcher__draft--current {
+  background: $ostera-navy;
+  color: $ostera-white;
+}
+
+// The formats of a draft (PDF, DOCX, MD), as small links after its name.
+.draft-files {
+  white-space: nowrap;
+}
+
+.draft-files__format {
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 0 0.35rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  vertical-align: 0.1em;
+}
+
+// A GitHub mark linking to a folder on GitHub. It takes the link color.
+
+.github-link {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 0;
+  color: $ostera-navy;
+}
+
+.github-link:hover,
+.github-link:focus {
+  color: $ostera-rust;
+}
+
+.github-icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: $breakpoint) {
+  .band {
+    padding: 40px 0;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+  }
+}

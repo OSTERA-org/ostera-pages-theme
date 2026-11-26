@@ -1,0 +1,7 @@
+{%- comment -%}
+  The status of one Working Group Last Call or Public Review, from its
+  dates. Usage: include review-status.html p=draft.last_call
+  assets/js/ostera.js turns it into Upcoming, Open, Closed, or Withdrawn
+  from the reader's own date. Without the script, it shows the dates.
+{%- endcomment -%}
+<span class="review-status" data-opens="{{ include.p.opens }}" data-closes="{{ include.p.closes }}" data-withdrawn="{{ include.p.withdrawn }}">{{ include.p.opens }} through {{ include.p.closes }}</span>

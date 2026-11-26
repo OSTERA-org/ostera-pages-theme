@@ -1,0 +1,18 @@
+{%- comment -%}
+  The current stage of one version of a work item, for its draft pages and
+  the Work Items table.
+  Usage: include work-item-stage.html item=work_item version=v
+  Without version, it is the newest version. It shows the stage that
+  work-items.pl worked out when the site was built, until
+  assets/js/ostera.js works out the stage for the reader's own date:
+  Published, an open Working Group Last Call or Public Review of the latest
+  draft, the approval of the latest draft, an upcoming Last Call or Public
+  Review, or the Last Call or Public Review that opened last.
+{%- endcomment -%}
+{%- if include.version -%}
+{%- assign stage_v = include.version -%}
+{%- else -%}
+{%- assign stage_v = include.item.versions | last -%}
+{%- endif -%}
+{%- assign stage_d = stage_v.drafts | last -%}
+<span class="work-item-stage" data-version="{{ stage_v.version }}" data-published="{{ stage_v.published }}" data-approved="{% if stage_d and stage_v.approved.draft == stage_d.draft %}{{ stage_v.approved.date }}{% endif %}" data-lc-opens="{{ stage_d.last_call.opens }}" data-lc-closes="{{ stage_d.last_call.closes }}" data-lc-withdrawn="{{ stage_d.last_call.withdrawn }}" data-rv-opens="{{ stage_d.public_review.opens }}" data-rv-closes="{{ stage_d.public_review.closes }}" data-rv-withdrawn="{{ stage_d.public_review.withdrawn }}">{% if stage_v.published %}Published, Version {{ stage_v.version }}{% else %}{{ stage_v.status }}{% endif %}</span>

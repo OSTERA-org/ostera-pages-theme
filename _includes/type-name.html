@@ -1,0 +1,13 @@
+{%- comment -%}
+  The name of a document type code. Usage: include type-name.html code="TS"
+{%- endcomment -%}
+{%- case include.code -%}
+{%- when "PD" -%}Policy/Process Document (PD)
+{%- when "STD" -%}Standard (STD)
+{%- when "TS" -%}Technical Specification (TS)
+{%- when "SUP" -%}Supplement (SUP)
+{%- when "TN" -%}Technical Note (TN)
+{%- when "TP" -%}Technical Paper (TP)
+{%- when "TR" -%}Technical Report (TR)
+{%- else -%}{{ include.code }}
+{%- endcase -%}

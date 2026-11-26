@@ -1,0 +1,28 @@
+{%- comment -%}
+  The Review History of one version: one row for each Working Group Last
+  Call and Public Review, newest first. An outcome that starts with
+  https:// is shown as a link, and any other outcome as text. Usage:
+  include review-history.html id=work_item_id version=v
+{%- endcomment -%}
+{%- assign hbase = "/work-items/" | append: include.id | append: "/" | relative_url -%}
+{%- assign hcount = 0 -%}
+{%- for hd in include.version.drafts -%}{%- if hd.last_call or hd.public_review -%}{%- assign hcount = hcount | plus: 1 -%}{%- endif -%}{%- endfor -%}
+{%- if hcount > 0 %}
+<table class="review-history">
+<thead><tr><th>Draft</th><th>Step</th><th>Period</th><th>Status</th></tr></thead>
+<tbody>
+{%- assign hdrafts = include.version.drafts | reverse %}
+{%- assign hsteps = "public_review,last_call" | split: "," %}
+{%- for hd in hdrafts %}
+{%- for hs in hsteps %}
+{%- assign hp = hd[hs] %}
+{%- if hp %}
+<tr><td><a href="{{ hbase }}v{{ include.version.version }}/{{ hd.draft }}/">{{ hd.name }}</a></td><td>{% if hs == "last_call" %}Working Group Last Call{% else %}Public Review{% endif %}</td><td>{{ hp.opens }} through {{ hp.closes }}</td><td>{% include review-status.html p=hp %}{% if hp.outcome and hp.outcome != "" %}<br>{% assign hout = hp.outcome | slice: 0, 8 %}{% if hout == "https://" %}<a href="{{ hp.outcome }}">Outcome</a>{% else %}<span class="review-history__note">Outcome: {{ hp.outcome | escape }}</span>{% endif %}{% endif %}{% if hp.recorded and hp.recorded != "" %}<br><span class="review-history__note">Recorded on {{ hp.recorded }}, after it was held</span>{% endif %}</td></tr>
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
+</tbody>
+</table>
+{%- else %}
+<p>No Working Group Last Call or Public Review yet.</p>
+{%- endif %}

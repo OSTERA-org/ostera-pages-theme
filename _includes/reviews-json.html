@@ -1,0 +1,40 @@
+{%- comment -%}
+  Every Public Review of a Working Group, as JSON, built from each work
+  item's registry.yaml. The list at wg.ostera.org/reviews/ reads it.
+  Usage: include reviews-json.html, in 06-Website/reviews.json
+{%- endcomment -%}
+{%- assign wg = site.baseurl | remove: "/" -%}
+{%- assign first = true -%}
+[
+{%- for pair in site.data.work_items -%}
+{%- assign id = pair[0] -%}
+{%- assign w = pair[1] -%}
+{%- assign page_url = "/work-items/" | append: id | append: "/" | absolute_url -%}
+{%- for v in w.versions -%}
+{%- for d in v.drafts -%}
+{%- assign p = d.public_review -%}
+{%- if p -%}
+{%- unless first %},{% endunless -%}
+{%- assign first = false %}
+  {
+    "working_group": {{ wg | jsonify }},
+    "working_group_name": {{ site.short_title | jsonify }},
+    "working_group_url": {{ "/" | absolute_url | jsonify }},
+    "work_item": {{ id | jsonify }},
+    "name": {{ w.name | jsonify }},
+    "number": {{ w.number | default: "" | jsonify }},
+    "url": {{ page_url | jsonify }},
+    "version": {{ v.version | jsonify }},
+    "draft": {{ d.name | jsonify }},
+    "draft_url": {{ page_url | append: "v" | append: v.version | append: "/" | append: d.draft | append: "/" | jsonify }},
+    "file_url": {{ page_url | append: "v" | append: v.version | append: "/" | append: d.files.first.name | jsonify }},
+    "step": "Public Review",
+    "opens": "{{ p.opens }}",
+    "closes": "{{ p.closes }}",
+    "withdrawn": "{{ p.withdrawn }}"
+  }
+{%- endif -%}
+{%- endfor -%}
+{%- endfor -%}
+{%- endfor %}
+]

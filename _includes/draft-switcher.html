@@ -1,0 +1,12 @@
+{%- comment -%}
+  The drafts of one version as small squares (01, 02, ...), each a link to
+  that draft's page. Usage:
+  include draft-switcher.html id=work_item_id version=v current=draft
+  current (optional) is the draft whose page this is, shown filled in.
+{%- endcomment -%}
+{%- assign swbase = "/work-items/" | append: include.id | append: "/" | relative_url -%}
+{%- assign sw_size = include.version.drafts | size -%}
+{%- if sw_size > 0 -%}
+<p class="draft-switcher"><span class="draft-switcher__label">Drafts of Version {{ include.version.version }}:</span>
+{%- for sd in include.version.drafts %} {% if sd.draft == include.current %}<strong class="draft-switcher__draft draft-switcher__draft--current" title="{{ sd.name }}">{{ sd.draft }}</strong>{% else %}<a class="draft-switcher__draft" href="{{ swbase }}v{{ include.version.version }}/{{ sd.draft }}/" title="{{ sd.name }}">{{ sd.draft }}</a>{% endif %}{% endfor %}</p>
+{%- endif -%}

@@ -1,0 +1,21 @@
+// OSTERA brand values
+
+// Colors
+$ostera-navy:  #1e384c;   // headings, body text, header, and dark sections
+$ostera-rust:  #af3f2b;   // primary buttons, links, and accents
+$ostera-cream: #f6f5ef;   // light sections and the footer
+$ostera-white: #ffffff;
+$ostera-rule:  #dcd9cc;   // borders and table lines (a darker cream)
+$ostera-muted: #5e6b75;   // text for steps not reached and closed reviews
+
+// Fonts
+// ostera.org uses Trajan Pro for headings. These sites use Cinzel, which is
+// very similar.
+$font-heading: "Cinzel", "Trajan Pro", Georgia, "Times New Roman", serif;
+$font-body:    "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-mono:    "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+
+// Layout
+$gutter:       24px;
+$radius:       12px;
+$breakpoint:   900px;

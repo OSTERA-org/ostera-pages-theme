@@ -1,0 +1,38 @@
+---
+layout: default
+---
+{%- comment -%}
+  Front matter used by this layout (all optional):
+    hero_title:   large heading, defaults to the site title
+    hero_text:    short introduction, Markdown allowed
+    hero_buttons: list of items with label, url, and style
+                  (style is "primary" or "secondary")
+{%- endcomment %}
+<section class="band band--cream hero">
+  <div class="wrap">
+    <h1>{{ page.hero_title | default: site.title | escape }}</h1>
+    {%- if page.hero_text %}
+    <div class="lead">{{ page.hero_text | markdownify }}</div>
+    {%- endif %}
+    {%- if page.hero_buttons %}
+    <p class="button-row">
+      {%- for button in page.hero_buttons %}
+      {%- if button.url contains '://' %}
+        {%- assign button_url = button.url %}
+      {%- else %}
+        {%- assign button_url = button.url | relative_url %}
+      {%- endif %}
+      <a class="button button--{{ button.style | default: 'primary' }}" href="{{ button_url }}">{{ button.label | escape }}</a>
+      {%- endfor %}
+    </p>
+    {%- endif %}
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="prose">
+{{ content }}
+    </div>
+  </div>
+</section>

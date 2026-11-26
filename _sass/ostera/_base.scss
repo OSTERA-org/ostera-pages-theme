@@ -1,0 +1,135 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  background: $ostera-white;
+  color: $ostera-navy;
+  font-family: $font-body;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: $font-heading;
+  font-weight: 700;
+  line-height: 1.25;
+  color: $ostera-navy;
+  margin: 1.6em 0 0.6em;
+}
+
+h1 { font-size: 2.5rem; margin-top: 0; }
+h2 { font-size: 1.875rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; color: $ostera-rust; }
+
+h5,
+h6 {
+  font-family: $font-body;
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 1.4em 0 0.4em;
+}
+
+p,
+ul,
+ol,
+table,
+pre,
+blockquote {
+  margin: 0 0 1.1em;
+}
+
+a {
+  color: $ostera-rust;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover,
+a:focus {
+  color: $ostera-navy;
+}
+
+code,
+pre {
+  font-family: $font-mono;
+  font-size: 0.9em;
+}
+
+code {
+  background: $ostera-cream;
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+}
+
+pre {
+  background: $ostera-cream;
+  border: 1px solid $ostera-rule;
+  border-radius: $radius;
+  padding: 1em;
+  overflow-x: auto;
+
+  code {
+    background: none;
+    padding: 0;
+  }
+}
+
+blockquote {
+  border-left: 4px solid $ostera-rust;
+  padding-left: 1em;
+  font-style: italic;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid $ostera-rule;
+  margin: 2em 0;
+}
+
+// Every band of every page (header, site bar, content, and footer) spans
+// the whole window, with the same side margins as ostera.org (4% of the
+// window width). Text is never held to a narrower column, because these
+// sites have no images or other content beside it to fill the space.
+.wrap {
+  margin: 0 auto;
+  padding: 0 max(4vw, #{$gutter});
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: $ostera-white;
+  color: $ostera-navy;
+  padding: 0.5em 1em;
+}
+
+.skip-link:focus {
+  left: $gutter;
+}
+
+@media (max-width: $breakpoint) {
+  body { font-size: 1rem; }
+  h1 { font-size: 1.875rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+}

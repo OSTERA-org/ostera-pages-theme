@@ -1,0 +1,13 @@
+---
+# Front matter is required so that Jekyll compiles this file to ostera.css.
+---
+
+@import "ostera/variables";
+@import "ostera/base";
+@import "ostera/header";
+@import "ostera/footer";
+@import "ostera/components";
+
+// A site can add its own styles by creating _sass/ostera-custom.scss.
+// The empty file in this theme is used when the site has none.
+@import "ostera-custom";

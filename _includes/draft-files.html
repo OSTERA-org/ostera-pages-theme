@@ -1,0 +1,10 @@
+{%- comment -%}
+  The formats of one draft, as small links: PDF, DOCX, LATEX, and so on.
+  Each link shows the file's SHA-512 sum when the reader points at it. A
+  format that is a folder, such as LaTeX, is offered as a ZIP.
+  Usage: include draft-files.html d=draft v=version id=work_item_id
+{%- endcomment -%}
+{%- assign fbase = "/work-items/" | append: include.id | append: "/v" | append: include.v | append: "/" | relative_url -%}
+{%- if include.d.files -%}
+<span class="draft-files">{% for f in include.d.files %}{% if f.folder %}<a class="draft-files__format" href="{{ fbase }}{{ f.zip }}" title="{{ f.name }}, a folder of {{ f.count }} files, as a ZIP. The SHA-512 sum of each file is in SHA512SUMS.">{{ f.format }}</a>{% else %}<a class="draft-files__format" href="{{ fbase }}{{ f.name }}" title="{{ f.name }}, SHA-512: {{ f.sha512 }}">{{ f.format }}</a>{% endif %}{% endfor %}</span>
+{%- endif -%}

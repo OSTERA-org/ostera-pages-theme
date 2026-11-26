@@ -1,0 +1,17 @@
+{%- comment -%}
+  The body of the Meetings page of a Working Group site, from
+  06-Website/_data/meetings.yml. The agendas and reports are linked in
+  02-Meetings/<date>/ of the repository.
+  Usage: include meetings-page.html, in 06-Website/meetings.md
+{%- endcomment -%}
+{% if site.data.meetings.size > 0 -%}
+| Date | Meeting | Agenda | Report |
+| --- | --- | --- | --- |
+{% for meeting in site.data.meetings -%}
+| {{ meeting.date }} | {{ meeting.title }} | {% if meeting.agenda %}[Agenda]({{ site.repo_url }}blob/main/02-Meetings/{{ meeting.date }}/agenda.md){% endif %} | {% if meeting.report %}[Report]({{ site.repo_url }}blob/main/02-Meetings/{{ meeting.date }}/report.md){% endif %} |
+{% endfor %}
+{%- else -%}
+No meetings have been held yet.
+{%- endif %}
+
+All public agendas and reports are kept in the [02-Meetings]({{ site.repo_url }}tree/main/02-Meetings/) folder of the repository. Materials that are confidential to OSTERA members are kept in the [OSTERA Portal](https://member.ostera.org/).

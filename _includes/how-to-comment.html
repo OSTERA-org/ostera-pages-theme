@@ -1,0 +1,24 @@
+{%- comment -%}
+  How to comment on a draft, for a draft page.
+  Usage: include how-to-comment.html name=draft_name
+{%- endcomment -%}
+<h2>How to Comment</h2>
+
+<p>Anyone may comment on a draft during its Public Review, even if they are not a member of OSTERA. To comment:</p>
+
+<ul>
+<li>open an issue in the <a href="{{ site.repo_url }}issues/new/choose">{{ site.short_title }} repository</a>, or</li>
+<li>send an email to <a href="mailto:public-review@ostera.org?subject={{ include.name }}">public-review@ostera.org</a>.</li>
+</ul>
+
+<p>Please include the draft name and the section your comment is about.</p>
+
+{% comment %}BEGIN STANDARD TEXT{% endcomment %}
+
+<p>Anything you submit to OSTERA, such as an issue, a pull request, a comment, or an email, is a contribution under the <a href="https://ostera.org/policies/">OSTERA IPR and Copyright Policy</a>, and by submitting it you agree to that policy. Do not submit anything you do not have the right to contribute.</p>
+
+<p>If you have knowledge of intellectual property rights, including patents, copyrights, trademarks, and service marks, for software or text, the use of which may be required to implement or publish any of the work items being considered, please disclose it by following the instructions at <a href="https://ostera.org/ipr/">ostera.org/ipr/</a> or contact the Secretariat at <a href="mailto:secretariat@ostera.org">secretariat@ostera.org</a>.</p>
+
+{% comment %}END STANDARD TEXT{% endcomment %}
+
+<p>Drafts are works in progress. They have not been approved by OSTERA and <strong>MUST NOT</strong> be cited as OSTERA publications. Approved documents are published at <a href="https://pub.ostera.org/">pub.ostera.org</a>.</p>

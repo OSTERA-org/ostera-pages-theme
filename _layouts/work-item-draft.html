@@ -1,0 +1,108 @@
+---
+layout: default
+---
+{%- comment -%}
+  The page of one draft of a work item on a Working Group site, at
+  /work-items/<id>/v<version>/<draft>/. This is the work item's page: the
+  work item's own address, /work-items/<id>/, opens the page of its latest
+  draft. The site's build step writes each draft's page with layout:
+  work-item-draft, work_item, version, draft, and title, and everything on
+  it comes from site.data.work_items[work_item], which the build step
+  writes from the work item's 03-Work-Items/<id>/registry.yaml.
+
+  Everything on it is about this draft's version: the squares at the top
+  move between the drafts of this version, and the Stage, the Progress,
+  and the Review History are this version's. Another version is chosen on
+  the Work Items page.
+{%- endcomment -%}
+{%- assign id = page.work_item -%}
+{%- assign w = site.data.work_items[id] -%}
+{%- for cv in w.versions -%}{%- if cv.version == page.version -%}{%- assign v = cv -%}{%- endif -%}{%- endfor -%}
+{%- for cd in v.drafts -%}{%- if cd.draft == page.draft -%}{%- assign d = cd -%}{%- endif -%}{%- endfor -%}
+{%- assign wbase = "/work-items/" | append: id | append: "/" | relative_url -%}
+{%- assign vbase = wbase | append: "v" | append: v.version | append: "/" -%}
+{%- assign folder = "03-Work-Items/" | append: id | append: "/" -%}
+{%- assign vfolder = folder | append: "v" | append: v.version | append: "/" -%}
+{%- assign latest = v.drafts | last -%}
+<section class="band band--cream page-title">
+  <div class="wrap">
+    <h1>{{ d.name }}</h1>
+    <p class="lead">{{ w.name | escape }}, Draft of Version {{ v.version }}</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="prose">
+<p class="review-banner"><strong>Stage:</strong> {% include work-item-stage.html item=w version=v %}</p>
+
+<p>{{ w.summary }}</p>
+
+{% include draft-switcher.html id=id version=v current=d.draft %}
+
+<ul>
+<li><strong>Draft:</strong> {{ d.name }} {% include draft-files.html d=d v=v.version id=id %}</li>
+{%- unless latest.draft == d.draft %}
+<li><strong>Latest Draft:</strong> <a href="{{ vbase }}{{ latest.draft }}/">{{ latest.name }}</a></li>
+{%- endunless %}
+{% include cover-fields.html d=d %}
+<li><strong>Released:</strong> {{ d.released }}</li>
+<li><strong>Working Group:</strong> <a href="{{ '/' | relative_url }}">{{ site.short_title }}</a></li>
+<li><strong>Working Group Status:</strong> {{ v.status }}</li>
+{%- if w.number and w.number != "" %}
+<li><strong>Document Number:</strong> {{ w.number }}</li>
+{%- endif %}
+<li><strong>Document Type:</strong> {% include type-name.html code=w.type %}</li>
+<li><strong>Version:</strong> {{ v.version }}</li>
+{%- if v.published %}
+<li><strong>Published:</strong> <a href="https://pub.ostera.org/{{ id }}/v{{ v.version }}/">{% if w.number and w.number != "" %}{{ w.number }}, {% endif %}Version {{ v.version }}</a>, on {{ v.published }}</li>
+{%- endif %}
+<li><strong>Folder:</strong> <a href="{{ site.repo_url }}tree/main/{{ folder }}">{{ folder }}</a> <a class="github-link" href="{{ site.repo_url }}tree/main/{{ folder }}" aria-label="{{ folder }} on GitHub" title="{{ folder }} on GitHub">{% include github-icon.html %}</a></li>
+</ul>
+{%- if d.citation and d.citation != "" %}
+
+<h2>Citation Format</h2>
+
+<p>{{ d.citation | escape }}</p>
+{%- endif %}
+
+<h2>Progress</h2>
+{% include work-item-stages.html version=v id=id %}
+
+<h2>Review History</h2>
+{% include review-history.html id=id version=v %}
+
+{%- if d.changes and d.changes != "" %}
+
+<h2>Changes Since the Previous Draft</h2>
+
+<p>{{ d.changes }}</p>
+{%- endif %}
+
+<h2>Files</h2>
+
+<ul>
+{%- for f in d.files %}
+{%- if f.folder %}
+<li><a href="{{ vbase }}{{ f.zip }}">{{ f.format }}</a>: the folder <code>{{ f.name }}/</code>, with {{ f.count }} files, as a ZIP</li>
+{%- else %}
+<li><a href="{{ vbase }}{{ f.name }}">{{ f.format }}</a>: <code>{{ f.name }}</code></li>
+{%- endif %}
+{%- endfor %}
+{%- if v.sums %}
+<li><a href="{{ vbase }}{{ v.sums }}">{{ v.sums }}</a>: the SHA-512 sum of every file of every draft of version {{ v.version }}</li>
+{%- endif %}
+</ul>
+
+<p>A released draft never changes. A revised draft gets a new draft number. <a href="{{ site.repo_url }}tree/main/{{ vfolder }}">Browse these files on GitHub</a>.</p>
+
+<h2>Verifying a File</h2>
+
+<p>Compute the SHA-512 sum of the downloaded file, and compare it with its line in <code>SHA512SUMS</code>:</p>
+
+<pre><code>shasum -a 512 {{ d.file }}</code></pre>
+
+{% include how-to-comment.html name=d.name %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+---
+layout: default
+---
+{%- comment -%}
+  The address of one work item on a Working Group site, /work-items/<id>/.
+  The page of each draft (layout work-item-draft) is the work item's page,
+  so this address opens the page of the latest draft of the newest version
+  that has one. A work item with no draft yet gets a short page here.
+
+  The site's build step writes this page with layout: work-item,
+  work_item: <id>, and title, from the work item's
+  03-Work-Items/<id>/registry.yaml (see site.data.work_items[<id>]).
+{%- endcomment -%}
+{%- assign id = page.work_item -%}
+{%- assign w = site.data.work_items[id] -%}
+{%- assign wbase = "/work-items/" | append: id | append: "/" | relative_url -%}
+{%- assign folder = "03-Work-Items/" | append: id | append: "/" -%}
+{%- assign rversions = w.versions | reverse -%}
+{%- assign latest = nil -%}
+{%- for lv in rversions -%}{%- assign lsize = lv.drafts | size -%}{%- if latest == nil and lsize > 0 -%}{%- assign latest = lv.drafts | last -%}{%- assign latest_version = lv.version -%}{%- endif -%}{%- endfor -%}
+{%- if latest -%}
+{%- assign target = wbase | append: "v" | append: latest_version | append: "/" | append: latest.draft | append: "/" -%}
+<meta http-equiv="refresh" content="0; url={{ target }}">
+<script>window.location.replace("{{ target }}");</script>
+<section class="band">
+  <div class="wrap">
+    <div class="prose">
+<p>The latest draft of {{ w.name | escape }} is <a href="{{ target }}">{{ latest.name }}</a>.</p>
+    </div>
+  </div>
+</section>
+{%- else -%}
+<section class="band band--cream page-title">
+  <div class="wrap">
+    <h1>{{ w.name | escape }}</h1>
+    <p class="lead">{% if w.number and w.number != "" %}{{ w.number }}, {% endif %}{% include type-name.html code=w.type %}</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="prose">
+<p class="review-banner"><strong>Stage:</strong> {% include work-item-stage.html item=w %}</p>
+
+<p>{{ w.summary }}</p>
+
+<ul>
+<li><strong>Working Group:</strong> <a href="{{ '/' | relative_url }}">{{ site.short_title }}</a></li>
+<li><strong>Working Group Status:</strong> {{ w.status }}</li>
+{%- if w.number and w.number != "" %}
+<li><strong>Document Number:</strong> {{ w.number }}</li>
+{%- endif %}
+<li><strong>Document Type:</strong> {% include type-name.html code=w.type %}</li>
+<li><strong>Folder:</strong> <a href="{{ site.repo_url }}tree/main/{{ folder }}">{{ folder }}</a> <a class="github-link" href="{{ site.repo_url }}tree/main/{{ folder }}" aria-label="{{ folder }} on GitHub" title="{{ folder }} on GitHub">{% include github-icon.html %}</a></li>
+</ul>
+
+<p>No draft has been released yet.</p>
+    </div>
+  </div>
+</section>
+{%- endif %}

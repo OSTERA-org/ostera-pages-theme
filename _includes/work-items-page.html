@@ -1,0 +1,56 @@
+{%- comment -%}
+  The body of the Work Items page of a Working Group site.
+  Usage: include work-items-page.html, in 06-Website/work-items.md
+  An index of the work items. Each comes from its own
+  03-Work-Items/<id>/registry.yaml, which work-items.pl copies to
+  site.data.work_items when the site is built. Each work item is its own
+  <tbody>, so all of its rows share one background. Each version has its
+  own row, newest first. A version opens the page of its latest draft,
+  with that version's drafts, progress, and Review History; the work
+  item's name opens its newest version. The Stage is worked out from the
+  dates when the page is viewed (see work-item-stage.html). The page is
+  Markdown, so the text after the table is Markdown too.
+{%- endcomment -%}
+{% if site.data.work_items == nil or site.data.work_items.size == 0 -%}
+No work items have been started yet.
+{% else -%}
+<table class="work-items">
+<thead><tr><th>Work Item</th><th>Version</th><th>Latest Draft</th><th>Stage</th><th>GitHub</th></tr></thead>
+{%- for pair in site.data.work_items %}
+{%- assign id = pair[0] %}
+{%- assign w = pair[1] %}
+{%- assign page_url = "/work-items/" | append: id | append: "/" | relative_url %}
+{%- assign folder = "03-Work-Items/" | append: id | append: "/" %}
+{%- assign rversions = w.versions | reverse %}
+{%- assign vcount = w.versions | size %}
+<tbody>
+{%- for v in rversions %}
+{%- assign d = v.drafts | last %}
+{%- assign version_url = page_url %}
+{%- if d %}{% assign version_url = page_url | append: "v" | append: v.version | append: "/" | append: d.draft | append: "/" %}{% endif %}
+<tr>
+{%- if forloop.first %}
+<td rowspan="{{ vcount }}"><a href="{{ page_url }}">{{ w.name }}</a>{% if w.number and w.number != "" %}<span class="work-item__number">{{ w.number }}</span>{% endif %}</td>
+{%- endif %}
+<td>{% if d %}<a href="{{ version_url }}">{{ v.version }}</a>{% else %}{{ v.version }}{% endif %}</td>
+<td>{% if d %}<a href="{{ version_url }}">{{ d.name }}</a> {% include draft-files.html d=d v=v.version id=id %}{% else %}None yet{% endif %}</td>
+<td>{% include work-item-stage.html item=w version=v %}</td>
+{%- if forloop.first %}
+<td class="work-items__github" rowspan="{{ vcount }}"><a class="github-link" href="{{ site.repo_url }}tree/main/{{ folder }}" aria-label="{{ folder }} on GitHub" title="{{ folder }} on GitHub">{% include github-icon.html %}</a></td>
+{%- endif %}
+</tr>
+{%- endfor %}
+</tbody>
+{%- endfor %}
+</table>
+{% endif %}
+
+## Working Group Last Calls and Public Reviews
+
+Each work item's page shows its development and review progress. All Public Reviews for every Working Group are listed on the [Public Reviews](https://wg.ostera.org/reviews/) page.
+
+## Commenting on a Draft
+
+Each draft's page explains how to comment during its Public Review, and [How to Participate](https://wg.ostera.org/participate/) explains how to take part in the Working Group.
+
+Drafts are works in progress. They have not been approved by OSTERA and **MUST NOT** be cited as OSTERA publications.

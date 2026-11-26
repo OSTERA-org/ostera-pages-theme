@@ -1,0 +1,92 @@
+// The footer matches the one on ostera.org. Sizes grow with the window width
+// the same way ostear.org sizes them: (size - 1) * 1.2vw + 1rem.
+
+.ostera-footer {
+  background: $ostera-cream;
+  border-top: 1px solid $ostera-rule;
+  padding: 50px 0 70px;
+  color: $ostera-navy;
+
+  a {
+    color: $ostera-navy;
+    text-decoration: none;
+  }
+
+  a:hover,
+  a:focus {
+    color: $ostera-rust;
+  }
+}
+
+.ostera-footer__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+// Squarespace heading size 1.6rem.
+.ostera-footer__name {
+  font-family: $font-heading;
+  font-weight: 700;
+  font-size: calc(0.72vw + 1rem);
+  line-height: 1.4;
+  margin: 0 0 0.45em;
+}
+
+// Squarespace body size 1.2rem.
+.ostera-footer address {
+  font-style: normal;
+  font-size: calc(0.24vw + 1rem);
+  line-height: 1.6;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.ostera-footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 12px;
+}
+
+.ostera-footer__badge {
+  display: block;
+  width: 23vw;
+  max-width: 460px;
+  height: auto;
+}
+
+.ostera-footer__social {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+
+  a {
+    display: block;
+    padding: 10px 0;
+  }
+
+  svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+}
+
+@media (max-width: $breakpoint) {
+  .ostera-footer__inner {
+    flex-direction: column;
+  }
+
+  .ostera-footer__brand {
+    align-items: flex-start;
+  }
+
+  .ostera-footer__badge {
+    width: 240px;
+  }
+}

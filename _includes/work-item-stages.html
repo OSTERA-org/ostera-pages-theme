@@ -1,0 +1,42 @@
+{%- comment -%}
+  The progress of one version of a work item, as the stage bar.
+  Usage: include work-item-stages.html version=v id=work_item_id
+  The six stages are Planned, In Development, Last Call, Public Review,
+  Approved, and Published. Each is marked on its own, because the Working
+  Group Last Call, the Public Review, and the approval can happen in any
+  order, or at the same time. Planned is always done. In Development is
+  done once the baseline text is accepted (started) or a draft is
+  released. The Last Call and Public Review steps list every one of the
+  version; the theme marks them with stages__step--review, so
+  assets/js/ostera.js can mark one as current while it is open, and as
+  done once one has opened, from the reader's own date. Approved is done
+  once the latest draft is approved, and Published once the version is
+  published.
+{%- endcomment -%}
+{%- assign sv = include.version -%}
+{%- assign stbase = "/work-items/" | append: include.id | append: "/v" | append: sv.version | append: "/" | relative_url -%}
+{%- assign snd = sv.drafts | last -%}
+{%- assign lc_count = 0 -%}{%- assign rv_count = 0 -%}
+{%- for d in sv.drafts -%}
+  {%- if d.last_call -%}{%- assign lc_count = lc_count | plus: 1 -%}{%- endif -%}
+  {%- if d.public_review -%}{%- assign rv_count = rv_count | plus: 1 -%}{%- endif -%}
+{%- endfor -%}
+{%- if sv.started or snd -%}{%- assign dev_cls = "done" -%}{%- else -%}{%- assign dev_cls = "todo" -%}{%- endif -%}
+{%- if snd and sv.approved.draft == snd.draft -%}{%- assign ap_cls = "done" -%}{%- else -%}{%- assign ap_cls = "todo" -%}{%- endif -%}
+{%- if lc_count > 0 -%}{%- assign lc_cls = "review stages__step--done" -%}{%- else -%}{%- assign lc_cls = "review stages__step--todo" -%}{%- endif -%}
+{%- if rv_count > 0 -%}{%- assign rv_cls = "review stages__step--done" -%}{%- else -%}{%- assign rv_cls = "review stages__step--todo" -%}{%- endif -%}
+{%- if sv.published -%}{%- assign pub_cls = "done" -%}{%- else -%}{%- assign pub_cls = "todo" -%}{%- endif -%}
+<ol class="stages">
+<li class="stages__step stages__step--done"><strong>Planned</strong><br>Version {{ sv.version }}</li>
+<li class="stages__step stages__step--{{ dev_cls }}"><strong>In Development</strong><br>{% if sv.started %}Started {{ sv.started }}{% if snd %}<br>{% endif %}{% endif %}{% if snd %}Latest draft <a href="{{ stbase }}{{ snd.draft }}/">{{ snd.name }}</a>, released {{ snd.released }}{% elsif sv.started == nil %}Not yet{% endif %}</li>
+<li class="stages__step stages__step--{{ lc_cls }}"><strong>Last Call</strong>
+{%- if lc_count == 0 %}<br>{% if sv.published %}Not recorded here{% else %}Not yet{% endif %}{% endif %}
+{%- for d in sv.drafts %}{% if d.last_call %}<br><a href="{{ stbase }}{{ d.draft }}/">{{ d.name }}</a>: {% include review-status.html p=d.last_call %}{% endif %}{% endfor -%}
+</li>
+<li class="stages__step stages__step--{{ rv_cls }}"><strong>Public Review</strong>
+{%- if rv_count == 0 %}<br>{% if sv.published %}Not recorded here{% else %}Not yet{% endif %}{% endif %}
+{%- for d in sv.drafts %}{% if d.public_review %}<br><a href="{{ stbase }}{{ d.draft }}/">{{ d.name }}</a>: {% include review-status.html p=d.public_review %}{% endif %}{% endfor -%}
+</li>
+<li class="stages__step stages__step--{{ ap_cls }}"><strong>Approved</strong><br>{% if sv.approved.date %}Draft {{ sv.approved.draft }}, approved {{ sv.approved.date }}{% if ap_cls != "done" %}<br>The latest draft is not approved yet{% endif %}{% elsif sv.published %}Not recorded here{% else %}Not yet{% endif %}</li>
+<li class="stages__step stages__step--{{ pub_cls }}"><strong>Published</strong><br>{% if sv.published %}<a href="https://pub.ostera.org/{{ include.id }}/v{{ sv.version }}/">Version {{ sv.version }}</a>, published {{ sv.published }}{% else %}Not yet{% endif %}</li>
+</ol>
